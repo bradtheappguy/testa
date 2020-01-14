@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -e
+
+[ $# -eq 0 ] && { 
+  echo "Usage: $0 new_branch_name \"Your commit message\""; 
+  exit 1; 
+}
+
+
+WORKING_BRANCH=$1
+MESSAGE=$2 
+
+STARTING_BRANCH=`git rev-parse --abbrev-ref HEAD`
+
+git stash
+git checkout -b "${WORKING_BRANCH}"
+git stash apply
+git add -A
+git commit -m"${MESSAGE}"
+git push
+hub pull-request -m "${MESSAGE}"
+git checkout "${STARTING_BRANCH}"
+git branch -d "${$WORKING_BRANCH}"
+
+
