@@ -21,6 +21,6 @@ git commit -m"${MESSAGE}"
 git push
 hub pull-request -m "${MESSAGE}"
 git checkout "${STARTING_BRANCH}"
-git branch -d "${$WORKING_BRANCH}"
+git branch -d "${WORKING_BRANCH}"
 
 
